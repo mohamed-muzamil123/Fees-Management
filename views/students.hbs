@@ -1,0 +1,96 @@
+  <!-- Sidebar -->
+    <div class="sidebar d-flex flex-column">
+      <h4 class="text-white text-center">Dashboard</h4>
+      <nav class="nav flex-column">
+        <a class="nav-link active" href="/">Dashboard</a>
+        <a class="nav-link" href="/students">Students</a>
+        <a class="nav-link" href="#">Fees</a>
+        <a class="nav-link" href="#">Reports</a>
+      </nav>
+    </div>
+
+  <!-- Header -->
+    <div class="header">
+      <div class="search-bar">
+        <form class="d-flex" method="GET" action="/search">
+          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="query">
+          <button class="btn btn-outline-primary" type="submit">Search</button>
+        </form>
+      </div>
+      <div class="admin-circle">A</div>
+    </div>
+
+
+
+<div class="main-content">
+ 
+ 
+  <div class="btn btn-prime filter">
+    <a href="" class="btn btn-primary">filter</a>
+
+</a>
+  </div>
+
+       <div class="table-responsive">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>Admno:</th>
+                <th>Name</th>
+                <th>Class</th>
+              </tr>
+            </thead>
+           
+            
+              <!-- Placeholder for No Students -->
+            
+             
+          
+  <tbody>
+    {{#each student}}
+    <tr onclick="window.location.href='/student-details/{{this._id}}';">
+      <td>{{this.admssion}}</td>
+      <td>{{this.name}}</td>
+      <td>{{this.class}}</td>
+    </tr>
+
+    {{/each}}
+  </tbody>
+
+              
+             
+
+           
+          </table>
+        </div>
+
+</div>
+
+<script>
+  // Add this script to your page
+document.querySelector('.search-bar form').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const query = this.querySelector('input').value.toLowerCase();
+  
+  document.querySelectorAll('tbody tr').forEach(row => {
+    const rowText = row.textContent.toLowerCase();
+    if (rowText.includes(query)) {
+      row.style.display = '';
+    } else {
+      row.style.display = 'none';
+    }
+  });
+  
+  // Show "no results" message if all rows are hidden
+  const visibleRows = document.querySelectorAll('tbody tr:not([style*="display: none"])').length;
+  const noResultsRow = document.querySelector('tbody tr[style*="display: none"]:last-child');
+  
+  if (visibleRows === 0 && noResultsRow) {
+    noResultsRow.style.display = '';
+    noResultsRow.querySelector('p').textContent = `No students found matching "${query}"`;
+  }
+});
+</script>
+
+
+

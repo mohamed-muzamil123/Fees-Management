@@ -1,0 +1,196 @@
+  <!-- Sidebar -->
+    <div class="sidebar d-flex flex-column">
+      <h4 class="text-white text-center">Dashboard</h4>
+      <nav class="nav flex-column">
+        <a class="nav-link active" href="">Dashboard</a>
+        <a class="nav-link" href="/students">Students</a>
+        <a class="nav-link" href="#">Fees</a>
+        <a class="nav-link" href="#">Reports</a>
+      </nav>
+    </div>
+
+    <!-- Header -->
+    <div class="header">
+      <div class="search-bar">
+        <form class="d-flex" method="GET" action="/search">
+          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="query">
+          <button class="btn btn-outline-primary" type="submit">Search</button>
+        </form>
+      </div>
+      <div class="admin-circle">A</div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+      <h2 class="mb-4">Overview</h2>
+        <div class="row">
+          <!-- Total Students Card -->
+          <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+            <div class="card text-center">
+              <div class="card-body">
+                <h5 class="card-title">Total Students</h5>
+                <p class="card-text display-6">0</p>
+              </div>
+            </div>
+          </div>
+          <!-- Fees Paid Card -->
+          <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+            <div class="card text-center">
+              <div class="card-body">
+                <h5 class="card-title">Fees Paid</h5>
+                <p class="card-text display-6">0</p>
+              </div>
+            </div>
+          </div>
+          <!-- Due to Paid Card -->
+          <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+            <div class="card text-center">
+              <div class="card-body">
+                <h5 class="card-title">Due to Paid</h5>
+                <p class="card-text display-6">0</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      
+    <!-- Recent Students Section -->
+  <div class="mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h2>Recent Students</h2>
+   <a onclick="addStudent()"> <button class="btn btn-primary">+ Add Student</button></a>
+    </div>
+    <div class="card">
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>Admno:</th>
+                <th>Name</th>
+                <th>Class</th>
+                <th>Phone</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            
+              <!-- Placeholder for No Students -->
+            
+              {{#each student}}
+              <tbody>
+                <tr>
+                  <td>{{this.admssion}}</td>
+                  <td>{{this.name}}</td>
+                  <td>{{this.class}}</td>
+                   <td>{{this.phone}}</td>
+                  <td>{{this.status}}</td>
+                
+                </tr>
+              </tbody> 
+              {{/each}}
+             
+  <!-- <tbody>
+              <tr>
+                <td colspan="6" class="text-center py-4">
+                  <div>
+                    <svg width="50" height="50" fill="#6c757d" class="bi bi-people" viewBox="0 0 16 16">
+                      <path d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1h8zm-7.978-1A.261.261 0 0 1 7 12.996c.001-.264.167-1.03.76-1.72C8.312 10.629 9.282 10 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72l-.008.002a.274.274 0 0 1-.014.002H7.022zM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0zM6.936 9.28a5.88 5.88 0 0 1-1.23-.247A7.35 7.35 0 0 1 5 9c-4 0-5 3-5 4 0 .667.333 1 1 1h4.216A2.238 2.238 0 0 1 5 13c0-1.01.377-2.042 1.09-2.904.243-.294.526-.569.846-.816zM4.92 10A5.493 5.493 0 0 0 4 13H1c0-.26.164-1.03.76-1.724.545-.636 1.492-1.256 3.16-1.275zM1.5 5.5a3 3 0 1 1 6 0 3 3 0 0 1-6 0zm3-2a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"/>
+                    </svg>
+                  </div>
+                  <p class="mt-2 mb-0">No Students Found</p>
+                  <p class="text-muted">Click "Add Student" to add your first student</p>
+                </td>
+              </tr>
+            
+            </tbody>
+            -->
+           
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="addStudentPopup" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(0, 0, 0, 0.5); width: 100%; height: 100%; animation: fadeIn 0.3s ease-in; z-index: 1000;">
+    <div style="max-width: 500px; margin: 0 auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.5);">
+      <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #dee2e6; padding-bottom: 10px;">
+        <h5 style="margin: 0;">Add New Student</h5>
+        <button onclick="document.getElementById('addStudentPopup').style.display='none'" style="background: none; border: none; font-size: 1.5rem;">×</button>
+      </div>
+      <div style="padding: 20px 0;">
+        <form id="addStudentForm" method="post" action="/add-student">
+          <div style="margin-bottom: 1rem;">
+            <label for="studentId" style="display: block; margin-bottom: 0.5rem;">AdmNo:</label>
+            <input type="text" name="admssion" id="studentId" style="width: 100%; padding: 0.5rem; border: 1px solid #ced4da; border-radius: 4px;" required>
+          </div>
+          <div style="margin-bottom: 1rem;">
+            <label for="studentName" style="display: block; margin-bottom: 0.5rem;">Name</label>
+            <input type="text" name="name" id="studentName" style="width: 100%; padding: 0.5rem; border: 1px solid #ced4da; border-radius: 4px;" required>
+          </div>
+          <div style="margin-bottom: 1rem;">
+            <label for="studentCourse" style="display: block; margin-bottom: 0.5rem;">Class</label>
+            <input type="text" name="class" id="studentCourse" style="width: 100%; padding: 0.5rem; border: 1px solid #ced4da; border-radius: 4px;" required>
+          </div>
+          <div style="margin-bottom: 1rem;">
+            <label for="enrollmentDate" style="display: block; margin-bottom: 0.5rem;">Phone</label>
+            <input type="number" name="phone" id="enrollmentDate" style="width: 100%; padding: 0.5rem; border: 1px solid #ced4da; border-radius: 4px;" required>
+          </div>
+          <div style="margin-bottom: 1rem;">
+            <label for="studentStatus" style="display: block; margin-bottom: 0.5rem;">Status</label>
+            <select id="studentStatus" name="status" style="width: 100%; padding: 0.5rem; border: 1px solid #ced4da; border-radius: 4px;" required>
+              <option value="Active">Active</option>
+              <option value="Inactive">Inactive</option>
+            </select>
+          </div>
+        
+      </div>
+      <div style="display: flex; justify-content: flex-end; gap: 10px; border-top: 1px solid #dee2e6; padding-top: 10px;">
+        <button onclick="document.getElementById('addStudentPopup').style.display='none'" style="padding: 0.5rem 1rem; border: 1px solid #6c757d; border-radius: 4px; background: #6c757d; color: white;">Close</button>
+        <button  type="submit" style="padding: 0.5rem 1rem; border: none; border-radius: 4px; background: #007bff; color: white;">Save</button>
+    </form>
+      </div>
+    </div>
+  </div>
+
+  <style>
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+  </style>
+    </div>
+    <script src="../routes/index.js"></script>
+
+    <script>
+// Add this script to your page
+document.querySelector('.search-bar form').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const query = this.querySelector('input').value.toLowerCase();
+  
+  document.querySelectorAll('tbody tr').forEach(row => {
+    const rowText = row.textContent.toLowerCase();
+    if (rowText.includes(query)) {
+      row.style.display = '';
+    } else {
+      row.style.display = 'none';
+    }
+  });
+  
+  // Show "no results" message if all rows are hidden
+  const visibleRows = document.querySelectorAll('tbody tr:not([style*="display: none"])').length;
+  const noResultsRow = document.querySelector('tbody tr[style*="display: none"]:last-child');
+  
+  if (visibleRows === 0 && noResultsRow) {
+    noResultsRow.style.display = '';
+    noResultsRow.querySelector('p').textContent = `No students found matching "${query}"`;
+  }
+});
+
+    function addStudent(){
+  var x = document.getElementById("addStudentPopup");
+  if (x.style.display === "none") {
+    x.style.display = "block";
+  } else {
+    x.style.display = "none";
+  } 
+}
+    </script>
